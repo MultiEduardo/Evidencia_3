@@ -74,7 +74,7 @@ public class Evidencia {
                     case 0:
                         programEnd = true;
                         db.close();
-                        System.out.println("\nGracias por tu vista");
+                        System.out.println("\nGracias por su vista");
                         break;
                     default:
                         System.out.println("Selecciona una opción válida");
