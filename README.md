@@ -53,7 +53,7 @@ descomprimiendo para futuros pasos).
 3. Dirigirnos a la ruta en que está el ejecutable (en la carpeta "dist" del
 proyecto), por medio de comandos (cd <Tu ruta>/dist).
    
-4. Escribir el siguiente comando: java -jar "Evidencia.jar". Esto nos permitirá
+4. Escribir el siguiente comando: java -jar "Evidencia 3.jar". Esto nos permitirá
 la correcta ejecución del programa, desde la consola.
 
  USO DEL PROGRAMA
