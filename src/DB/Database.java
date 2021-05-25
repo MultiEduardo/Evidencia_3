@@ -2,8 +2,8 @@ package DB;
 
 import java.sql.*;
 import Menu.Doctor;
-import Menu.Paciente;
 import Menu.Cita;
+import Menu.Paciente;
 import Menu.Sesion;
 
 
@@ -47,11 +47,27 @@ public class Database {
         }
         return validation;
     }
+    public boolean agregarSesion (Sesion sesion){
+        String query ="Insert into Sesion (user, password)"
+                + "values('"+sesion.getUser()+
+                "','"+sesion.getPassword()+"');";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            if (ex.getMessage().contains("UNIQUE")){
+                System.err.println("\nEste Usuario ya existe,"
+                        + " ingrese otro\n");
+                return false;
+            }
+        }
+        return true;
+    }
 
     public boolean agregarPaciente (Paciente paciente){
-        String query ="Insert into Pacientes (idPaciente, nombre, descProb)"
-                + "values('"+paciente.getId()+
-                "','"+paciente.getName()+"','"
+        String query ="Insert into Pacientes (nombre, descProb)"
+                + "values('"+paciente.getName()+"','"
                 +paciente.getDescProb()+"');";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
@@ -107,9 +123,8 @@ public class Database {
     }
 
     public boolean agregarDoctor (Doctor doctor){
-        String query ="Insert into Doctores (idDoctor, nombre, especialidad)"
-                + "values('"+doctor.getId()+
-                "','"+doctor.getName()+"','"
+        String query ="Insert into Doctores (nombre, especialidad)"
+                + "values('"+doctor.getName()+"','"
                 +doctor.getEspecialidad()+"');";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
@@ -145,9 +160,8 @@ public class Database {
     }
 
     public boolean agregarCita (Cita cita){
-        String query ="Insert into Citas (idCita, fecha, hora)"
-                + "values('"+cita.getIdCita()+
-                "','"+cita.getFecha()+"','"
+        String query ="Insert into Citas (fecha, hora)"
+                + "values('"+cita.getFecha()+"','"
                 +cita.getHora()+"');";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);

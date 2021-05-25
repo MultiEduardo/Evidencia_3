@@ -5,19 +5,9 @@ public class Cita {
     private String fecha;
     private String hora;
 
-    public Cita(int idCita, String fecha, String hora) {
-        this.idCita = idCita;
+    public Cita(String fecha, String hora) {
         this.fecha = fecha;
         this.hora = hora;
-    }
-
-
-    public int getIdCita() {
-        return idCita;
-    }
-
-    public void setIdCita(int idCita) {
-        this.idCita = idCita;
     }
 
     public String getFecha() {

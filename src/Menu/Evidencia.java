@@ -16,6 +16,7 @@ public class Evidencia {
         boolean programEnd = false;
         boolean sesionIniciada;
         System.out.println("Agenda de citas o doctores");
+        System.out.println("Usuario: admin\n" + "Contraseña: admin\n");
         System.out.print("Ingrese su usuario: ");
         String user = s.next();
         System.out.print("Ingrese su contraseña: ");
@@ -71,6 +72,13 @@ public class Evidencia {
                         System.out.println("\nLista de citas relacionadas:");
                         db.mostrarCitasRelacionadas();
                         break;
+                    case 9:
+                        end = false;
+                        System.out.println("\nRegistro de Usuarios:");
+                        while (end == false) {
+                            end = agregarUsuario(db);
+                        }
+                        break;
                     case 0:
                         programEnd = true;
                         db.close();
@@ -84,10 +92,12 @@ public class Evidencia {
         }
     }
 
+    //Estes es el menu dentro del sistema
     public static int Menu(){
         Scanner s = new Scanner(System.in);
         int respuesta=0;
         System.out.printf(
+                "Bienvenido al panel de contro \n"+
                 "Menú"+
                         "\n1. Dar de alta paciente\n"+
                         "2. Mostrar todos los pacientes\n"+
@@ -97,6 +107,7 @@ public class Evidencia {
                         "6. Mostrar citas\n"+
                         "7. Relacionar citas\n"+
                         "8. Mostrar citas relacionadas\n"+
+                        "9. Agregar usuario\n"+
                         "0. Salir\n"+
                         "¿Qué deseeas hacer? \n");
         respuesta = s.nextInt();
@@ -104,38 +115,33 @@ public class Evidencia {
         return respuesta;
     }
 
+    //Agenda a los pacientes
     public static boolean agregarPaciente(Database db){
         Scanner s = new Scanner(System.in);
         try{
-            System.out.print("Ingresa el ID del paciente: ");
-            int idPaciente = s.nextInt();
             System.out.print("Ingresa el nombre del paciente: ");
-            s.nextLine(); //Salto de línea
             String nombrePaciente = s.nextLine();
             System.out.print("(Opcional) Ingresa el problema del paciente: ");
             String descProb = s.nextLine();
             if(descProb.equals("")){
                 descProb = "No especificado";
             }
-            Paciente paciente = new Paciente(nombrePaciente,idPaciente,descProb);
+            Paciente paciente = new Paciente(nombrePaciente,descProb);
             return db.agregarPaciente(paciente);
         } catch (Exception ex){
             System.err.println("Ingrese bien los datos");
             return false;
         }
     }
-
+    //Agenda a los doctores
     public static boolean agregarDoctor(Database db){
         Scanner s = new Scanner(System.in);
         try {
-            System.out.print("Ingresa el ID del doctor: ");
-            int idDoctor = s.nextInt();
             System.out.print("Ingresa el nombre del doctor: ");
-            s.nextLine(); //Salto de Línea
             String nombreDoctor = s.nextLine();
             System.out.print("Ingresa la especialidad del doctor: ");
             String especialidad = s.nextLine();
-            Doctor doctor = new Doctor(nombreDoctor,idDoctor,especialidad);
+            Doctor doctor = new Doctor(nombreDoctor,especialidad);
             return db.agregarDoctor(doctor);
         } catch (Exception ex){
             System.err.println("Ingrese bien los datos");
@@ -143,18 +149,15 @@ public class Evidencia {
         }
 
     }
-
+    //Podemos agregar una nueva cita
     public static boolean agregarCita(Database db){
         Scanner s = new Scanner(System.in);
         try{
-            System.out.print("Ingresa el ID de la cita: ");
-            int idCita = s.nextInt();
             System.out.print("Ingresa la fecha de la cita: ");
-            s.nextLine(); //Salto de Línea
             String fecha = s.nextLine();
             System.out.print("Ingresa la hora de la cita: ");
             String hora = s.nextLine();
-            Cita cita = new Cita(idCita,fecha,hora);
+            Cita cita = new Cita(fecha,hora);
             return db.agregarCita(cita);
         } catch(Exception ex){
             System.err.println("Ingrese bien los datos");
@@ -174,6 +177,21 @@ public class Evidencia {
             int idPaciente = s.nextInt();
             return db.relacionarCitas(idCita,idDoctor, idPaciente);
         } catch(Exception ex){
+            System.err.println("Ingrese bien los datos");
+            return false;
+        }
+    }
+
+    public static boolean agregarUsuario(Database db){
+        Scanner s = new Scanner(System.in);
+        try{
+            System.out.print("Ingresa el Usuario: ");
+            String Usuario = s.nextLine();
+            System.out.print("Ingresa la contraseña: ");
+            String Contraseña = s.nextLine();
+            Sesion sesion = new Sesion(Usuario,Contraseña);
+            return db.agregarSesion(sesion);
+        } catch (Exception ex){
             System.err.println("Ingrese bien los datos");
             return false;
         }

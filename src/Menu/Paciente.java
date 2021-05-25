@@ -3,8 +3,8 @@ package Menu;
 public class Paciente extends Persona {
     private String descProb;
 
-    public Paciente(String name, int id, String descProb) {
-        super(name, id);
+    public Paciente(String name, String descProb) {
+        super(name);
         this.descProb = descProb;
     }
 

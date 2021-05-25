@@ -3,8 +3,8 @@ package Menu;
 public class Doctor extends Persona {
     String especialidad;
 
-    public Doctor(String name, int id, String especialidad) {
-        super(name, id);
+    public Doctor(String name, String especialidad) {
+        super(name);
         this.especialidad = especialidad;
     }
 
