@@ -165,7 +165,7 @@ public class Evidencia {
         }
 
     }
-
+    //aqui relacionamos las citas junto con el doctor, paciente y cita
     public static boolean relacionarCitas(Database db){
         Scanner s = new Scanner(System.in);
         try{
@@ -181,7 +181,7 @@ public class Evidencia {
             return false;
         }
     }
-
+    //Agregra un nuevo usuario, para iniciar sesion
     public static boolean agregarUsuario(Database db){
         Scanner s = new Scanner(System.in);
         try{

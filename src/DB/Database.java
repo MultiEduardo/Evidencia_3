@@ -13,7 +13,7 @@ public class Database {
 
     public void Database(){
     }
-
+    //Checa si la base de datos esta conectada
     public void connect(){
         try {
             connection = DriverManager.getConnection(db);
@@ -21,7 +21,7 @@ public class Database {
             System.err.println("No conectado a la base de datos " + ex.getMessage());
         }
     }
-
+    //cierra la base de datos cuando el usuario se salga del programa
     public void close(){
         try{
             connection.close();
@@ -29,7 +29,7 @@ public class Database {
             System.err.println("Database\\close(): " + ex.getMessage());
         }
     }
-
+    //checa si la sesion existe
     public boolean validarSesion(Sesion sesion){
         String query = "select * from Sesion";
         boolean validation=false;
@@ -47,6 +47,7 @@ public class Database {
         }
         return validation;
     }
+    //llamamos a la base dedatos para agergar una nueva sesion
     public boolean agregarSesion (Sesion sesion){
         String query ="Insert into Sesion (user, password)"
                 + "values('"+sesion.getUser()+
@@ -64,7 +65,7 @@ public class Database {
         }
         return true;
     }
-
+    //llamamos a la base dedatos para agergar una nuevo paciente
     public boolean agregarPaciente (Paciente paciente){
         String query ="Insert into Pacientes (nombre, descProb)"
                 + "values('"+paciente.getName()+"','"
@@ -82,7 +83,7 @@ public class Database {
         }
         return true;
     }
-
+    //llamamos a la base de datos de SQLite para mostar todos los pacientes
     public void mostrarPacientes(){
         String query ="select * from Pacientes";
         int count=0;
@@ -102,7 +103,7 @@ public class Database {
             System.err.println("Database\\mostrarPacientes()" + ex.getMessage());
         }
     }
-
+    //llamamos a la base de datos SQLite para mostrar a los doctores
     public void mostrarDoctores(){
         String query ="select * from Doctores";
         int count=0;
@@ -121,7 +122,7 @@ public class Database {
             System.err.println("Database\\mostrarDoctores()" + ex.getMessage());
         }
     }
-
+    //llamamos a la base de datos para agergar una nuevo doctor
     public boolean agregarDoctor (Doctor doctor){
         String query ="Insert into Doctores (nombre, especialidad)"
                 + "values('"+doctor.getName()+"','"
@@ -139,7 +140,7 @@ public class Database {
         }
         return true;
     }
-
+    //Mostrara todas las citas que se han regosyrado en la base de datos SQLite
     public void mostrarCitas(){
         String query ="select * from Citas";
         int count=0;
@@ -158,7 +159,7 @@ public class Database {
             System.err.println("Database\\mostrarCitas()" + ex.getMessage());
         }
     }
-
+    //llamamos a la base de datos para agergar una nueva cita
     public boolean agregarCita (Cita cita){
         String query ="Insert into Citas (fecha, hora)"
                 + "values('"+cita.getFecha()+"','"
@@ -176,7 +177,7 @@ public class Database {
         }
         return true;
     }
-
+    //verificaremos que exita el id
     private boolean verificarID(int id, String idTabla,String tabla){
         int count = 0;
         String query= "Select * from "+tabla +" where " + idTabla + "=" + id;
@@ -196,7 +197,7 @@ public class Database {
         }
         return false;
     }
-
+    //En dado caso de no existir el id se monstrar un error
     private boolean verificarTodoID(int idCita, int idDoctor, int idPaciente){
         if(verificarID(idCita, "idCita", "Citas")==false){
             System.err.println("El ID de la cita es incorrecto");
@@ -211,9 +212,9 @@ public class Database {
             return true;
         }
     }
-
+    //aqui relacionamos las citas con el doctor y la hora del paciente junto con su nombre
     public boolean relacionarCitas (int idCita, int idDoctor, int idPaciente){
-        //Verificar que los ID se enceuntren en la DB
+        //Verificar que los ID se encuentren en la DB
         if (verificarTodoID(idCita, idDoctor, idPaciente)){
             String query="Insert into CitasRelacionadas(idCita,idDoctor,idPaciente)"
                     + "values('"+idCita+"','"+idDoctor+"','"+idPaciente+"');";
@@ -230,7 +231,7 @@ public class Database {
             return false;
         }
     }
-
+    //se monstrara la citas con el doctor y la hora
     public void mostrarCitasRelacionadas(){
         String query ="select Doctores.nombre,Pacientes.nombre,Citas.fecha,Citas.hora\n" +
                 "from Doctores, Pacientes, Citas, CitasRelacionadas\n" +
